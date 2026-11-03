@@ -1,0 +1,19 @@
+import '../css/app.css';
+
+import { createInertiaApp } from '@inertiajs/react';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { createRoot } from 'react-dom/client';
+
+const appName = import.meta.env.VITE_APP_NAME || 'Dennmar';
+
+createInertiaApp({
+    title: (title) => (title ? `${title} - ${appName}` : appName),
+    // "Projects/Index" -> resources/js/Pages/Projects/Index.jsx
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
+    setup({ el, App, props }) {
+        createRoot(el).render(<App {...props} />);
+    },
+    progress: {
+        color: '#c8a96e',
+    },
+});
